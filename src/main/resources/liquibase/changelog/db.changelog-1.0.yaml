@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - changeSet:
+      id: init-database
+      author: neowise
