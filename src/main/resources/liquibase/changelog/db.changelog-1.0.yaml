@@ -56,14 +56,14 @@ databaseChangeLog:
               - column:
                   name: create_at
                   type: timestamp
-                  defaultValue: current_timestamp()
+                  defaultValue: NOW
                   constraints:
                     nullable: false
 
               - column:
                   name: update_at
                   type: timestamp
-                  defaultValue: current_timestamp()
+                  defaultValue: NOW
                   constraints:
                     nullable: false
 
@@ -99,14 +99,14 @@ databaseChangeLog:
               - column:
                   name: create_at
                   type: timestamp
-                  defaultValue: current_timestamp()
+                  defaultValue: NOW
                   constraints:
                     nullable: false
 
               - column:
                   name: update_at
                   type: timestamp
-                  defaultValue: current_timestamp()
+                  defaultValue: NOW
                   constraints:
                     nullable: false
 
