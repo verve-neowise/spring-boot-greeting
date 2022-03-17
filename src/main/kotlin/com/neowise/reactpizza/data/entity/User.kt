@@ -4,7 +4,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name="users")
-data class UserEntity(
+data class User(
 
     @Column(name = "username")
     val username: String,
@@ -27,6 +27,6 @@ data class UserEntity(
         joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")]
     )
-    val roles: List<RoleEntity>
+    val roles: List<Role>
 
 ): BaseEntity()

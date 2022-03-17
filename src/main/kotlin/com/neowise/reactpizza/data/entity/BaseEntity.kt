@@ -10,7 +10,7 @@ import javax.persistence.*
 open class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int = 0
+    val id: Long = 0
 
     @CreatedDate
     @Column(name = "create_at")
@@ -22,5 +22,5 @@ open class BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    val status: Status = Status.NOT_ACTIVE
+    val status: Status = Status.ACTIVE
 }
