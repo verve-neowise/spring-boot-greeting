@@ -1,4 +1,170 @@
 databaseChangeLog:
   - changeSet:
-      id: init-database
+      id: 1.0.0-init-users
       author: neowise
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                      primaryKey: true
+                      nullable: false
+
+              - column:
+                  name: username
+                  type: varchar(100)
+                  constraints:
+                    unique: true
+                    nullable: false
+
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+
+              - column:
+                  name: first_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: last_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: status
+                  type: varchar(25)
+                  defaultValue: ACTIVE
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: create_at
+                  type: timestamp
+                  defaultValue: current_timestamp()
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: update_at
+                  type: timestamp
+                  defaultValue: current_timestamp()
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 1.0.1-init-roles
+      author: neowise
+      changes:
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    unique: true
+                    nullable: false
+
+              - column:
+                  name: status
+                  type: varchar(25)
+                  defaultValue: ACTIVE
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: create_at
+                  type: timestamp
+                  defaultValue: current_timestamp()
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: update_at
+                  type: timestamp
+                  defaultValue: current_timestamp()
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 1.0.2-init-user_roles
+      author: neowise
+      changes:
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+
+              - column:
+                  name: role_id
+                  type: bigint
+
+  - changeSet:
+      id: 1.0.3-user-foreign-keys
+      author: neowise
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: user_roles
+            constraintName: fk_user_roles_user
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: users
+
+  - changeSet:
+      id: 1.0.4-roles-foreign-keys
+      author: neowise
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: role_id
+            baseTableName: user_roles
+            constraintName: fk_user_roles_roles
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: roles
+
+  - changeSet:
+      id: 1.0.5-insert-base-roles
+      author: neowise
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+             - column:
+                 name: name
+                 value: ROLE_USER
+
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: ROLE_ADMIN
