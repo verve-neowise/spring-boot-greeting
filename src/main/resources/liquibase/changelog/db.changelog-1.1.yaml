@@ -1,0 +1,53 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 1.0.6-insert-test-user
+      author: neowise
+      changes:
+        - insert:
+            tableName: users
+            columns:
+
+              - column:
+                  name: username
+                  value: test
+
+              - column:
+                  name: email
+                  value: test@email.com
+
+              - column:
+                  name: first_name
+                  value: test
+
+              - column:
+                  name: last_name
+                  value: user
+
+              - column:
+                  name: password
+                  value: $2a$04$YQdEaGbBEbmFC71OCJUh.u4WRsI5D2EZMSJrhB6sShawe06bxM9p6
+
+  - changeSet:
+      id: 1.0.7-insert-test-user_roles
+      author: neowise
+      changes:
+        - insert:
+            tableName: user_roles
+            columns:
+              - column:
+                 name: user_id
+                 value: 1
+              - column:
+                 name: role_id
+                 value: 1
+
+        - insert:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: role_id
+                  value: 2

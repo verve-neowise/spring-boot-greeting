@@ -24,16 +24,12 @@ class JwtTokenProvider
         private val userDetailsService: UserDetailsService
     ){
 
-    @Value(value = "{jwt.token.secret}")
+    @Value(value = "\${jwt.token.secret}")
     private lateinit var secret: String
 
-    @Value(value = "{jwt.token.expired}")
+    @Value(value = "\${jwt.token.expired}")
     private var validityInMilliseconds: Long = 0
 
-    @Bean
-    fun passwordEncoder(): BCryptPasswordEncoder? {
-        return BCryptPasswordEncoder()
-    }
 
     @PostConstruct
     protected fun init() {
