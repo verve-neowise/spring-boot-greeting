@@ -2,7 +2,7 @@ package com.neowise.reactpizza.security.jwt
 
 import com.neowise.reactpizza.data.entity.Role
 import com.neowise.reactpizza.data.entity.User
-import com.neowise.reactpizza.domain.model.Status
+import com.neowise.reactpizza.data.entity.Status
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 

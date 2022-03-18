@@ -1,6 +1,5 @@
 package com.neowise.reactpizza.data.entity
 
-import com.neowise.reactpizza.domain.model.Status
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import java.util.*

@@ -1,7 +1,7 @@
 package com.neowise.reactpizza.security
 
 import com.neowise.reactpizza.data.entity.User
-import com.neowise.reactpizza.domain.UserService
+import com.neowise.reactpizza.service.UserService
 import com.neowise.reactpizza.security.jwt.JwtUserFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails

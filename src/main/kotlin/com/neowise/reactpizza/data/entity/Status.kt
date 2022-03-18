@@ -1,4 +1,4 @@
-package com.neowise.reactpizza.domain.model
+package com.neowise.reactpizza.data.entity
 
 enum class Status {
     ACTIVE,

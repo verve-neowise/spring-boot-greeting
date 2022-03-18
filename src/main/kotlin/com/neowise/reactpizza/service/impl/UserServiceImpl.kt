@@ -1,18 +1,16 @@
-package com.neowise.reactpizza.service
+package com.neowise.reactpizza.service.impl
 
-import com.neowise.reactpizza.data.entity.Role
 import com.neowise.reactpizza.data.entity.User
 import com.neowise.reactpizza.data.repository.RoleRepository
 import com.neowise.reactpizza.data.repository.UserRepository
-import com.neowise.reactpizza.domain.UserService
+import com.neowise.reactpizza.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class UserServiceImpl
-@Autowired constructor(
+class UserServiceImpl @Autowired constructor(
     private val userRepository: UserRepository,
     private val roleRepository: RoleRepository,
     private val passwordEncoder: BCryptPasswordEncoder

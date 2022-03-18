@@ -1,4 +1,4 @@
-package com.neowise.reactpizza.domain
+package com.neowise.reactpizza.service
 
 import com.neowise.reactpizza.data.entity.User
 
@@ -8,7 +8,7 @@ interface UserService {
 
     fun getAll(): List<User>
 
-    fun findByUsername(username: String): User
+    fun findByUsername(username: String): User?
 
     fun findById(id: Long): User
 

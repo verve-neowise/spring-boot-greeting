@@ -1,5 +1,6 @@
 package com.neowise.reactpizza.security.jwt
 
+import com.neowise.reactpizza.data.entity.Role
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
@@ -14,21 +15,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
 import java.util.*
 import javax.annotation.PostConstruct
-import javax.management.relation.Role
 import javax.servlet.http.HttpServletRequest
 
 
 @Component
-class JwtTokenProvider {
+class JwtTokenProvider
+    @Autowired constructor(
+        private val userDetailsService: UserDetailsService
+    ){
 
     @Value(value = "{jwt.token.secret}")
     private lateinit var secret: String
 
     @Value(value = "{jwt.token.expired}")
     private var validityInMilliseconds: Long = 0
-
-    @Autowired
-    private lateinit var userDetailsService: UserDetailsService
 
     @Bean
     fun passwordEncoder(): BCryptPasswordEncoder? {
@@ -98,6 +98,6 @@ class JwtTokenProvider {
     }
 
     fun getRoleNames(roles: List<Role>): List<String> {
-        return roles.map { it.roleName }
+        return roles.map { it.name }
     }
 }
