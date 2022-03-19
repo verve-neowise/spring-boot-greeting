@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class UserServiceImpl @Autowired constructor(
@@ -15,7 +16,6 @@ class UserServiceImpl @Autowired constructor(
     private val roleRepository: RoleRepository,
     private val passwordEncoder: BCryptPasswordEncoder
 ) : UserService {
-
 
     override fun register(user: User): User {
         val roleUser = roleRepository.findByName("ROLE_USER")
@@ -30,7 +30,7 @@ class UserServiceImpl @Autowired constructor(
         return userRepository.findAll()
     }
 
-    override fun findByUsername(username: String): User {
+    override fun findByUsername(username: String): Optional<User> {
         return userRepository.findByUsername(username)
     }
 

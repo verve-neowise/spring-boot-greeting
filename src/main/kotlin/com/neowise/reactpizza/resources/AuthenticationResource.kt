@@ -1,6 +1,8 @@
 package com.neowise.reactpizza.resources
 
+import com.neowise.reactpizza.data.entity.User
 import com.neowise.reactpizza.resources.request.AuthRequest
+import com.neowise.reactpizza.resources.request.SignUpRequest
 import com.neowise.reactpizza.resources.response.AuthResponse
 import com.neowise.reactpizza.service.UserService
 import com.neowise.reactpizza.security.jwt.JwtTokenProvider
@@ -30,7 +32,7 @@ class AuthenticationResource @Autowired constructor(
             authenticationManager.authenticate(UsernamePasswordAuthenticationToken(body.username, body.password))
 
             val user = userService.findByUsername(body.username)
-                ?: throw UsernameNotFoundException("User with username: ${body.username} not found!")
+                .orElseThrow {  throw UsernameNotFoundException("User with username: ${body.username} not found!") }
 
             val token = jwtTokenProvider.createToken(body.username, user.roles)
 
@@ -39,6 +41,19 @@ class AuthenticationResource @Autowired constructor(
         catch (e: AuthenticationException) {
             throw BadCredentialsException("Invalid username or password")
         }
+    }
+
+    @PostMapping("signup")
+    fun signup(@RequestBody body: SignUpRequest): AuthResponse {
+
+        userService.findByUsername(body.username).ifPresent {
+            throw BadCredentialsException("Username ${body.username} already taken.")
+        }
+
+        val user = userService.register(body.toUser())
+        val token = jwtTokenProvider.createToken(body.username, user.roles)
+
+        return AuthResponse(user.username, token)
     }
 }
 

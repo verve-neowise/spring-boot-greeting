@@ -1,6 +1,7 @@
 package com.neowise.reactpizza.service
 
 import com.neowise.reactpizza.data.entity.User
+import java.util.*
 
 interface UserService {
 
@@ -8,7 +9,7 @@ interface UserService {
 
     fun getAll(): List<User>
 
-    fun findByUsername(username: String): User?
+    fun findByUsername(username: String): Optional<User>
 
     fun findById(id: Long): User
 

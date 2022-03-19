@@ -20,6 +20,7 @@ class SecurityConfig @Autowired constructor(
     companion object {
         const val ADMIN_ENDPOINT = "/api/v1/admin/**"
         const val LOGIN_ENDPOINT = "/api/v1/auth/login"
+        const val SIGNUP_ENDPOINT = "/api/v1/auth/signup"
     }
 
     @Bean
@@ -35,6 +36,7 @@ class SecurityConfig @Autowired constructor(
             .and()
             .authorizeRequests()
             .antMatchers(LOGIN_ENDPOINT).permitAll()
+            .antMatchers(SIGNUP_ENDPOINT).permitAll()
             .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
             .anyRequest().authenticated()
             .and()
