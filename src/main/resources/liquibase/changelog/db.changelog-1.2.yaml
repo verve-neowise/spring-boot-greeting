@@ -1,0 +1,222 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.1.0-create-pizza-table
+      author: neowise
+      changes:
+        - createTable:
+            tableName: pizzas
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                      primaryKey: true
+                      nullable: false
+
+              - column:
+                  name: imageUrl
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: price
+                  type: real
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: rating
+                  type: real
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: status
+                  type: varchar(25)
+                  defaultValue: ACTIVE
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: create_at
+                  type: timestamp
+                  defaultValue: NOW
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: update_at
+                  type: timestamp
+                  defaultValue: NOW
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 1.1.1-create-types-table
+      author: neowise
+      changes:
+        - createTable:
+            tableName: types
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    unique: true
+                    nullable: false
+
+              - column:
+                  name: status
+                  type: varchar(25)
+                  defaultValue: ACTIVE
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: create_at
+                  type: timestamp
+                  defaultValue: NOW
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: update_at
+                  type: timestamp
+                  defaultValue: NOW
+                  constraints:
+                    nullable: false
+
+
+  - changeSet:
+      id: 1.1.2-create-sizes-table
+      author: neowise
+      changes:
+        - createTable:
+            tableName: sizes
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: size
+                  type: smallint
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: status
+                  type: varchar(25)
+                  defaultValue: ACTIVE
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: create_at
+                  type: timestamp
+                  defaultValue: NOW
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: update_at
+                  type: timestamp
+                  defaultValue: NOW
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 1.1.3-init-pizza_sizes
+      author: neowise
+      changes:
+        - createTable:
+            tableName: pizza_sizes
+            columns:
+              - column:
+                  name: pizza_id
+                  type: bigint
+
+              - column:
+                  name: size_id
+                  type: bigint
+
+  - changeSet:
+      id: 1.1.4-init-pizza_types
+      author: neowise
+      changes:
+        - createTable:
+            tableName: pizza_types
+            columns:
+              - column:
+                  name: pizza_id
+                  type: bigint
+
+              - column:
+                  name: type_id
+                  type: bigint
+
+  - changeSet:
+      id: 1.1.5-pizzas_foreign-keys
+      author: neowise
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: pizza_id
+            baseTableName: pizza_sizes
+            constraintName: fk_pizza_sizes_pizza
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: pizzas
+
+  - changeSet:
+      id: 1.1.6-sizes-foreign-keys
+      author: neowise
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: size_id
+            baseTableName: pizza_sizes
+            constraintName: fk_pizza_sizes_size
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: sizes
+
+  - changeSet:
+      id: 1.1.7-pizza_foreign-keys
+      author: neowise
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: pizza_id
+            baseTableName: pizza_types
+            constraintName: fk_pizza_types_pizza
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: pizzas
+
+  - changeSet:
+      id: 1.1.8-types_foreign-keys
+      author: neowise
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: type_id
+            baseTableName: pizza_types
+            constraintName: fk_pizza_types_type
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: types

@@ -1,5 +1,6 @@
-package com.neowise.reactpizza.data.entity
+package com.neowise.reactpizza.data.entity.user
 
+import com.neowise.reactpizza.data.entity.BaseEntity
 import javax.persistence.*
 
 @Entity
@@ -10,4 +11,5 @@ class Role(
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     val users: List<User>
+
 ) : BaseEntity()

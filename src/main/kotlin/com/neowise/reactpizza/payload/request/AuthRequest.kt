@@ -1,4 +1,4 @@
-package com.neowise.reactpizza.resources.request
+package com.neowise.reactpizza.payload.request
 
 data class AuthRequest(
     val username: String,

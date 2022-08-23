@@ -1,6 +1,6 @@
 package com.neowise.reactpizza.service.impl
 
-import com.neowise.reactpizza.data.entity.User
+import com.neowise.reactpizza.data.entity.user.User
 import com.neowise.reactpizza.data.repository.RoleRepository
 import com.neowise.reactpizza.data.repository.UserRepository
 import com.neowise.reactpizza.service.UserService

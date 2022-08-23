@@ -1,6 +1,6 @@
 package com.neowise.reactpizza.service
 
-import com.neowise.reactpizza.data.entity.User
+import com.neowise.reactpizza.data.entity.user.User
 import java.util.*
 
 interface UserService {

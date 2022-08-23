@@ -9,17 +9,17 @@ import javax.persistence.*
 open class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0
+    open val id: Long = 0
 
     @CreatedDate
     @Column(name = "create_at")
-    val createAt: Date = Date()
+    open val createAt: Date = Date()
 
     @LastModifiedDate
     @Column(name = "update_at")
-    val updateAt: Date = Date()
+    open val updateAt: Date = Date()
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    val status: Status = Status.ACTIVE
+    open val status: Status = Status.ACTIVE
 }

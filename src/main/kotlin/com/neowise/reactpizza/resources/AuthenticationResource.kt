@@ -1,9 +1,8 @@
 package com.neowise.reactpizza.resources
 
-import com.neowise.reactpizza.data.entity.User
-import com.neowise.reactpizza.resources.request.AuthRequest
-import com.neowise.reactpizza.resources.request.SignUpRequest
-import com.neowise.reactpizza.resources.response.AuthResponse
+import com.neowise.reactpizza.payload.request.AuthRequest
+import com.neowise.reactpizza.payload.request.SignUpRequest
+import com.neowise.reactpizza.payload.response.AuthResponse
 import com.neowise.reactpizza.service.UserService
 import com.neowise.reactpizza.security.jwt.JwtTokenProvider
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,32 +27,45 @@ class AuthenticationResource @Autowired constructor(
 
     @PostMapping("login")
     fun login(@RequestBody body: AuthRequest): ResponseEntity<AuthResponse> {
-        try {
+        return try {
             authenticationManager.authenticate(UsernamePasswordAuthenticationToken(body.username, body.password))
 
-            val user = userService.findByUsername(body.username)
-                .orElseThrow {  throw UsernameNotFoundException("User with username: ${body.username} not found!") }
+            val user = userService
+                .findByUsername(body.username)
+                .orElseThrow {
+                    UsernameNotFoundException("User with username: ${body.username} not found!")
+                }
 
             val token = jwtTokenProvider.createToken(body.username, user.roles)
 
-            return ResponseEntity.ok(AuthResponse(user.username, token))
+            ResponseEntity.ok(AuthResponse(user.username, token))
         }
         catch (e: AuthenticationException) {
-            throw BadCredentialsException("Invalid username or password")
+            ResponseEntity
+                .badRequest()
+                .body(AuthResponse("", "", e.message!!))
         }
     }
 
     @PostMapping("signup")
-    fun signup(@RequestBody body: SignUpRequest): AuthResponse {
+    fun signup(@RequestBody body: SignUpRequest): ResponseEntity<AuthResponse> {
 
-        userService.findByUsername(body.username).ifPresent {
-            throw BadCredentialsException("Username ${body.username} already taken.")
+        return try {
+            userService
+                .findByUsername(body.username)
+                .ifPresent {
+                    throw BadCredentialsException("Username ${body.username} already taken.")
+                }
+
+            val user = userService.register(body.toUser())
+            val token = jwtTokenProvider.createToken(body.username, user.roles)
+
+            ResponseEntity.ok(AuthResponse(user.username, token))
         }
-
-        val user = userService.register(body.toUser())
-        val token = jwtTokenProvider.createToken(body.username, user.roles)
-
-        return AuthResponse(user.username, token)
+        catch (e: AuthenticationException) {
+            ResponseEntity
+                .badRequest()
+                .body(AuthResponse("", "", e.message!!))
+        }
     }
 }
-

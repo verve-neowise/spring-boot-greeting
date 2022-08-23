@@ -1,5 +1,6 @@
-package com.neowise.reactpizza.data.entity
+package com.neowise.reactpizza.data.entity.user
 
+import com.neowise.reactpizza.data.entity.BaseEntity
 import javax.persistence.*
 
 @Entity
@@ -21,13 +22,11 @@ data class User(
     @Column(name = "password")
     val password: String,
 
-//    @Column(name = "roles")
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
         joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")]
     )
-
     val roles: List<Role>
 
 ): BaseEntity()
